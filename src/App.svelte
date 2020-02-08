@@ -10,7 +10,8 @@
   function addPost(photo) {
     let newPost = {
       data: photo.detail.data,
-      id: posts.length
+      id: posts.length,
+      liked: false
     };
     posts = [newPost, ...posts];
   }
@@ -30,6 +31,12 @@
       };
     }
   });
+
+  function handleLike(id) {
+    console.log(id);
+    let index = posts.findIndex(p => p.id === id);
+    posts[index] = { ...posts[index], liked: !posts[index].liked };
+  }
 </script>
 
 <style>
@@ -48,7 +55,11 @@
       in:receive={{ key: post.id }}
       out:send={{ key: post.id }}
       animate:flip={{ duration: 500 }}>
-      <Post imageData={post.data} id={post.id} />
+      <Post
+        imageData={post.data}
+        id={post.id}
+        liked={post.liked}
+        on:like={() => handleLike(post.id)} />
     </div>
   {/each}
 </main>
