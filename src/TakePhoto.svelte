@@ -1,4 +1,7 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+  const dispatch = createEventDispatcher();
+
   let video = null;
   let canvas = null;
 
@@ -14,7 +17,12 @@
   }
 
   function snap() {
-    canvas.getContext("2d").drawImage(video, 0, 0, 300, 200);
+    let ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(video, 0, 0, 300, 200);
+    dispatch("photo", {
+      data: canvas.toDataURL()
+    });
   }
 </script>
 
