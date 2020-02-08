@@ -28,7 +28,7 @@
 
 <style>
   .video {
-    display: none;
+    /*display: none;*/
   }
   .photo {
     background-color: #666;
