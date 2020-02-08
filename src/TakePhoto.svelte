@@ -4,12 +4,16 @@
 
   let video = null;
   let canvas = null;
+  let width = null;
+  let height = null;
 
   if (navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then(function(s) {
         video.srcObject = s;
+        height = s.getVideoTracks()[0].getSettings().height;
+        width = s.getVideoTracks()[0].getSettings().width;
       })
       .catch(function(err) {
         console.log(err);
@@ -19,7 +23,7 @@
   function snap() {
     let ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(video, 0, 0, 300, 200);
+    ctx.drawImage(video, 0, 0, width, height);
     dispatch("photo", {
       data: canvas.toDataURL()
     });
@@ -45,4 +49,4 @@
 
 <button on:click={snap}>TAKE PHOTO!</button>
 <video bind:this={video} autoplay playsinline muted />
-<canvas width="300px" height="200px" bind:this={canvas} />
+<canvas {width} {height} bind:this={canvas} />

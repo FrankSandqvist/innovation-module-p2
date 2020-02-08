@@ -6,7 +6,8 @@
 
   function addPost(photo) {
     let newPost = {
-      data: photo.detail.data
+      data: photo.detail.data,
+      id: posts.length
     };
     posts = [newPost, ...posts];
   }
@@ -23,7 +24,7 @@
 
 <main class="wrapper">
   <TakePhoto on:photo={addPost} />
-  {#each posts as post}
-    <Post imageData={post.data} />
+  {#each posts as post (post.id)}
+    <Post imageData={post.data} id={post.id}/>
   {/each}
 </main>
