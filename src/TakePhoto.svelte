@@ -27,18 +27,22 @@
 </script>
 
 <style>
-  .video {
+  button {
+    font-size: 2rem;
+  }
+  video {
     position: fixed;
     top: 0;
     left: 0;
-	opacity: 0.0001;
-	pointer-events: none;
+    opacity: 0.0001;
+    pointer-events: none;
   }
-  .photo {
+  canvas {
     background-color: #666;
+    display: none;
   }
 </style>
 
-<button on:click={snap}>Test</button>
-<video class="video" bind:this={video} autoplay playsinline muted />
-<canvas class="photo" width="300px" height="200px" bind:this={canvas} />
+<button on:click={snap}>TAKE PHOTO!</button>
+<video bind:this={video} autoplay playsinline muted />
+<canvas width="300px" height="200px" bind:this={canvas} />
