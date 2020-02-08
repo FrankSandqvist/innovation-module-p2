@@ -1,4 +1,7 @@
 <script>
+  import { crossfade } from "svelte/transition";
+  import { quintOut } from "svelte/easing";
+  import { flip } from "svelte/animate";
   import Post from "./Post.svelte";
   import TakePhoto from "./TakePhoto.svelte";
 
@@ -11,6 +14,22 @@
     };
     posts = [newPost, ...posts];
   }
+
+  const [send, receive] = crossfade({
+    fallback(node, params) {
+      const style = getComputedStyle(node);
+      const transform = style.transform === "none" ? "" : style.transform;
+
+      return {
+        duration: 600,
+        easing: quintOut,
+        css: t => `
+					transform: ${transform} scale(${t});
+					opacity: ${t}
+				`
+      };
+    }
+  });
 </script>
 
 <style>
@@ -25,6 +44,11 @@
 <main class="wrapper">
   <TakePhoto on:photo={addPost} />
   {#each posts as post (post.id)}
-    <Post imageData={post.data} id={post.id}/>
+    <div
+      in:receive={{ key: post.id }}
+      out:send={{ key: post.id }}
+      animate:flip={{ duration: 500 }}>
+      <Post imageData={post.data} id={post.id} />
+    </div>
   {/each}
 </main>
