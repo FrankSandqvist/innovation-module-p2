@@ -28,7 +28,7 @@
 
 <style>
   .video {
-    /*display: none;*/
+    display: none;
   }
   .photo {
     background-color: #666;
@@ -36,5 +36,5 @@
 </style>
 
 <button on:click={snap}>Test</button>
-<video class="video" autoplay bind:this={video} />
+<video class="video" autoplay playsinline muted bind:this={video} />
 <canvas class="photo" width="300px" height="200px" bind:this={canvas} />
