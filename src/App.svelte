@@ -14,7 +14,8 @@
 
 <style>
   .wrapper {
-    width: 30rem;
+    width: 100%;
+    max-width: 30rem;
     margin-left: auto;
     margin-right: auto;
   }
