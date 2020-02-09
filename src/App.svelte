@@ -64,7 +64,6 @@
 
 <main class="wrapper">
   <Logo />
-  <Spacer />
   <Camera on:photo={addPost} />
   <Spacer />
   {#each posts as post (post.id)}

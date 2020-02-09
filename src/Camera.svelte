@@ -2,18 +2,19 @@
   import { createEventDispatcher } from "svelte";
   const dispatch = createEventDispatcher();
 
-  let video = null;
-  let canvas = null;
-  let width = null;
-  let height = null;
+  let videoElement = null,
+    canvasElement = null,
+    videoOK = false,
+    width = null,
+    height = null,
+    mode = 1;
 
-  let mode = 1;
-
-  if (navigator.mediaDevices.getUserMedia) {
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then(function(s) {
-        video.srcObject = s;
+        videoOK = true;
+        videoElement.srcObject = s;
         height = s.getVideoTracks()[0].getSettings().height;
         width = s.getVideoTracks()[0].getSettings().width;
       })
@@ -36,11 +37,11 @@
   }
 
   function snap() {
-    let ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(video, 0, 0, width, height);
+    let ctx = canvasElement.getContext("2d");
+    ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    ctx.drawImage(videoElement, 0, 0, width, height);
     dispatch("photo", {
-      data: canvas.toDataURL()
+      data: canvasElement.toDataURL()
     });
   }
 </script>
@@ -71,6 +72,9 @@
   canvas {
     background-color: #666;
     display: none;
+  }
+  .message {
+    color: white;
   }
   .overlay {
     position: absolute;
@@ -114,16 +118,19 @@
   }
 </style>
 
-<div
-  class="shutter"
-  on:click={startCountdown}
-  style={mode === 2 ? 'animation: countdown 1s' : ''}>
+<div class="shutter" on:click={startCountdown}>
   {#if mode === 1}
     <div class="overlay">📷</div>
   {:else if mode === 3}
     <div class="flash" />
   {/if}
-  <video bind:this={video} autoplay playsinline muted />
+  <video autoplay playsinline muted bind:this={videoElement} />
 </div>
+{#if !videoOK}
+  <p class="message">
+    Please allow camera access. If you weren't asked to allow it, please try a
+    different browser.
+  </p>
+{/if}
 
-<canvas {width} {height} bind:this={canvas} />
+<canvas {width} {height} bind:this={canvasElement} />
