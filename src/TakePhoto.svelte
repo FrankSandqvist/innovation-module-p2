@@ -29,7 +29,7 @@
       snap();
       setTimeout(function() {
         mode = 1;
-      });
+      }, 1000);
     }, 1500);
   }
 
