@@ -37,8 +37,8 @@
 
 <style>
   .shutter {
-    width: 5rem;
-    height: 5rem;
+    width: 7rem;
+    height: 7rem;
     background: white;
     border-radius: 1rem;
     display: flex;
@@ -47,14 +47,15 @@
     font-size: 2rem;
     position: relative;
     overflow: hidden;
+    transform: translate3d(0, 0, 0);
   }
   video {
     position: absolute;
-    left: -2.5rem;
-    top: -2.5rem;
-    transform: translateX(2.5rem) translateY(2.5rem);
-    min-width: 100%;
-    max-height: 100%;
+    left: -75%;
+    top: -75%;
+    transform: translateX(37.5%) translateY(37.5%);
+    width: 150%;
+    height: 150%;
   }
   canvas {
     background-color: #666;
