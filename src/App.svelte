@@ -3,14 +3,21 @@
   import { quintOut } from "svelte/easing";
   import { flip } from "svelte/animate";
   import Post from "./Post.svelte";
-  import TakePhoto from "./TakePhoto.svelte";
+  import Camera from "./Camera.svelte";
+  import Spacer from "./Spacer.svelte";
+  import Logo from "./Logo.svelte";
+  import Footer from "./Footer.svelte";
 
   let posts = [];
 
   function addPost(photo) {
+    let id = Math.random()
+      .toString(16)
+      .substring(2);
+
     let newPost = {
       data: photo.detail.data,
-      id: posts.length,
+      id,
       liked: false
     };
     posts = [newPost, ...posts];
@@ -53,20 +60,13 @@
     margin-right: auto;
     text-align: center;
   }
-  .logo {
-    width: 80%;
-    place-self: center;
-  }
-  .spacer {
-    height: 2rem;
-  }
 </style>
 
 <main class="wrapper">
-  <img class="logo" alt="Instaselfie" src="logo.png" />
-  <div class="spacer" />
-  <TakePhoto on:photo={addPost} />
-  <div class="spacer" />
+  <Logo />
+  <Spacer />
+  <Camera on:photo={addPost} />
+  <Spacer />
   {#each posts as post (post.id)}
     <div
       in:receive={{ key: post.id }}
@@ -80,4 +80,5 @@
         on:delete={() => handleDelete(post.id)} />
     </div>
   {/each}
+  <Footer />
 </main>

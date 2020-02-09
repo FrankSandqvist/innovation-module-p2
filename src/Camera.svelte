@@ -50,7 +50,7 @@
     width: 7rem;
     height: 7rem;
     background: white;
-    border-radius: 1rem;
+    border-radius: 49.9%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,6 +58,7 @@
     overflow: hidden;
     transform: translate3d(0, 0, 0);
     place-self: center;
+    border: 2px solid white;
   }
   video {
     position: absolute;
@@ -113,7 +114,10 @@
   }
 </style>
 
-<div class="shutter" on:click={startCountdown}>
+<div
+  class="shutter"
+  on:click={startCountdown}
+  style={mode === 2 ? 'animation: countdown 1s' : ''}>
   {#if mode === 1}
     <div class="overlay">📷</div>
   {:else if mode === 3}
