@@ -33,9 +33,12 @@
   });
 
   function handleLike(id) {
-    console.log(id);
     let index = posts.findIndex(p => p.id === id);
     posts[index].liked = !posts[index].liked;
+  }
+
+  function handleDelete(id) {
+    posts = posts.filter(p => p.id !== id);
   }
 </script>
 
@@ -73,7 +76,8 @@
         imageData={post.data}
         id={post.id}
         liked={post.liked}
-        on:like={() => handleLike(post.id)} />
+        on:like={() => handleLike(post.id)}
+        on:delete={() => handleDelete(post.id)} />
     </div>
   {/each}
 </main>

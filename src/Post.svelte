@@ -6,6 +6,10 @@
     dispatch("like", {});
   }
 
+  function handleDelete() {
+    dispatch("delete", {});
+  }
+
   export let id;
   export let imageData;
   export let liked;
@@ -27,19 +31,28 @@
     align-items: flex-end;
     justify-content: flex-end;
     color: white;
-    font-size: 3rem;
-    padding-bottom: 1rem;
-    padding-right: 1.5rem;
-    box-sizing: border-box;
+    font-size: 2rem;
+    position: relative;
+    user-select: none;
   }
-  .heart {
-    transition: 0.2s;
+  .like-button {
+    position: absolute;
+    cursor: pointer;
+    right: 2rem;
+    bottom: 2rem;
+  }
+  .delete-button {
+    position: absolute;
+    cursor: pointer;
+    left: 2rem;
+    top: 2rem;
   }
 </style>
 
 <div
   class="card"
   style="background-image: url('{imageData}')"
-  on:click={handleLike}>
-  <div class="heart" style="transform: scale({liked ? 1 : 0})">❤</div>
+  on:dblclick={handleLike}>
+  <div on:click={handleDelete} class="delete-button">✕</div>
+  <div on:click={handleLike} class="like-button">{liked ? '♥' : '♡'}</div>
 </div>

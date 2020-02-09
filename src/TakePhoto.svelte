@@ -23,14 +23,16 @@
   }
 
   function startCountdown() {
-    mode = 2;
-    setTimeout(function() {
-      mode = 3;
-      snap();
+    if (mode === 1) {
+      mode = 2;
       setTimeout(function() {
-        mode = 1;
-      }, 1000);
-    }, 1500);
+        mode = 3;
+        snap();
+        setTimeout(function() {
+          mode = 1;
+        }, 1000);
+      }, 1500);
+    }
   }
 
   function snap() {
@@ -54,8 +56,8 @@
     justify-content: center;
     position: relative;
     overflow: hidden;
-	transform: translate3d(0, 0, 0);
-	place-self: center;
+    transform: translate3d(0, 0, 0);
+    place-self: center;
   }
   video {
     position: absolute;
@@ -78,8 +80,8 @@
     height: 100%;
     z-index: 100;
     font-size: 2rem;
-	background-color: rgba(0, 0, 0, 0.8);
-	animation: appear 1s;
+    background-color: rgba(0, 0, 0, 0.8);
+    animation: appear 1s;
     animation-fill-mode: forwards;
   }
   .flash {
@@ -112,10 +114,10 @@
 </style>
 
 <div class="shutter" on:click={startCountdown}>
-{#if mode === 1}
-  <div class="overlay">📷</div>
+  {#if mode === 1}
+    <div class="overlay">📷</div>
   {:else if mode === 3}
-  <div class="flash" />
+    <div class="flash" />
   {/if}
   <video bind:this={video} autoplay playsinline muted />
 </div>
