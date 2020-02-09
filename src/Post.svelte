@@ -33,8 +33,13 @@
     color: white;
     font-size: 2rem;
     position: relative;
-	user-select: none;
-	-webkit-touch-callout: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
   .like-button {
     position: absolute;
