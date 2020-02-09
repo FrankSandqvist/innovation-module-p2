@@ -78,7 +78,9 @@
     height: 100%;
     z-index: 100;
     font-size: 2rem;
-    background-color: rgba(0, 0, 0, 0.8);
+	background-color: rgba(0, 0, 0, 0.8);
+	animation: appear 1s;
+    animation-fill-mode: forwards;
   }
   .flash {
     position: absolute;
@@ -96,6 +98,15 @@
     }
     to {
       opacity: 0;
+    }
+  }
+
+  @keyframes appear {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
     }
   }
 </style>
