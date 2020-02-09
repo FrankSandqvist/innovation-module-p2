@@ -35,7 +35,7 @@
   function handleLike(id) {
     console.log(id);
     let index = posts.findIndex(p => p.id === id);
-    posts[index] = { ...posts[index], liked: !posts[index].liked };
+    posts[index].liked = !posts[index].liked;
   }
 </script>
 
@@ -45,10 +45,15 @@
     max-width: 30rem;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
+  }
+  .logo {
+    width: 80%;
   }
 </style>
 
 <main class="wrapper">
+  <img class="logo" alt="Instaselfie" src="logo.png" />
   <TakePhoto on:photo={addPost} />
   {#each posts as post (post.id)}
     <div

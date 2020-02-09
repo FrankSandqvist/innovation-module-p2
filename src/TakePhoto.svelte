@@ -7,6 +7,8 @@
   let width = null;
   let height = null;
 
+  let countdown = null;
+
   if (navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices
       .getUserMedia({ video: true })
@@ -20,6 +22,9 @@
       });
   }
 
+  function startCountdown() {
+    countdown = 3;
+  }
   function snap() {
     let ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -31,15 +36,23 @@
 </script>
 
 <style>
-  button {
+  .shutter {
+    width: 5rem;
+    height: 5rem;
+    background: white;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 2rem;
+    position: relative;
+    overflow: hidden;
   }
   video {
-    position: fixed;
-    top: 0;
-    left: 0;
-    opacity: 0.0001;
-    pointer-events: none;
+    flex: 1;
+    position: absolute;
+    min-width: 100%;
+    max-height: 100%;
   }
   canvas {
     background-color: #666;
@@ -47,6 +60,9 @@
   }
 </style>
 
-<button on:click={snap}>TAKE PHOTO!</button>
-<video bind:this={video} autoplay playsinline muted />
+<div class="shutter" on:click={startCountdown}>
+  📷
+  <video bind:this={video} autoplay playsinline muted />
+</div>
+
 <canvas {width} {height} bind:this={canvas} />

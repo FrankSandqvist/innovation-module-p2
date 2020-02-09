@@ -30,6 +30,7 @@
     font-size: 3rem;
     padding-bottom: 1rem;
     padding-right: 1.5rem;
+    box-sizing: border-box;
   }
   .heart {
     transition: 0.2s;
