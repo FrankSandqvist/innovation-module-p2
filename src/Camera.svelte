@@ -1,21 +1,18 @@
 <script>
+  import { getCamera, takePhoto } from "../utils/camera";
   import { createEventDispatcher } from "svelte";
   let dispatch = createEventDispatcher();
 
-  let MAX_WIDTH = 1500;
-
   let videoElement = null,
     canvasElement = null,
-    videoOK = false,
-    width = null,
-    height = null,
+    camera = null,
     mode = 1;
 
-  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+  /*if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then(function(s) {
-        videoOK = true;
+        cameraOK = true;
         videoElement.srcObject = s;
         let trackWidth = s.getVideoTracks()[0].getSettings().width,
           trackHeight = s.getVideoTracks()[0].getSettings().height;
@@ -26,33 +23,39 @@
       .catch(function(err) {
         console.log(err);
       });
+  }*/
+  getCamera.then(c => {
+    camera = c;
+  });
+
+  $: if (camera) {
+    videoElement.srcObject = camera.stream;
   }
 
-  function startCountdown() {
-    if (mode === 1) {
+  function handleClick() {
+    if (camera && mode === 1) {
       mode = 2;
-      setTimeout(function() {
-        mode = 3;
-        snap();
-        setTimeout(function() {
-          mode = 1;
-        }, 1000);
-      }, 1500);
+
+      setTimeout(snapPhoto, 1500);
     }
   }
 
-  function snap() {
-    let ctx = canvasElement.getContext("2d");
-    ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-    ctx.drawImage(videoElement, 0, 0, width, height);
-    dispatch("photo", {
-      photoData: canvasElement.toDataURL()
-    });
+  function snapPhoto() {
+    mode = 3;
+
+    let photoData = takePhoto(videoElement, camera);
+    dispatch("photo", { photoData });
+
+    setTimeout(reset, 1000);
+  }
+
+  function reset() {
+    mode = 1;
   }
 </script>
 
 <style>
-  .shutter {
+  .camera {
     width: 7rem;
     height: 7rem;
     background: white;
@@ -127,7 +130,7 @@
   }
 </style>
 
-<div class="shutter" on:click={startCountdown}>
+<div class="camera" on:click={handleClick}>
   {#if mode === 1}
     <div class="overlay">📷</div>
   {:else if mode === 3}
@@ -135,11 +138,9 @@
   {/if}
   <video autoplay playsinline muted bind:this={videoElement} />
 </div>
-{#if !videoOK}
+{#if !camera}
   <p class="message">
     Please allow camera access. If you weren't asked to allow it, please try a
     different browser.
   </p>
 {/if}
-
-<canvas {width} {height} bind:this={canvasElement} />
