@@ -1,4 +1,5 @@
 let RESOLUTION = 500;
+// MAX_RESOLUTION = 500;
 
 export const getCamera = new Promise((res, rej) => {
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -12,7 +13,7 @@ export const getCamera = new Promise((res, rej) => {
       .then(function(stream) {
         /*let trackWidth = stream.getVideoTracks()[0].getSettings().width,
         trackHeight = stream.getVideoTracks()[0].getSettings().height;
-        let scale = trackWidth > MAX_WIDTH ? MAX_WIDTH / trackWidth : 1;*/
+        let scale = trackWidth > MAX_RESOLUTION ? MAX_RESOLUTION / trackWidth : 1;*/
         res({
           stream,
           width: RESOLUTION,

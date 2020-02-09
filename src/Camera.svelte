@@ -72,11 +72,10 @@
   }
   video {
     position: absolute;
-    left: -75%;
-    top: -75%;
-    transform: translateX(37.5%) translateY(37.5%);
-    width: 150%;
-    height: 150%;
+    left: -10%;
+    top: -10%;
+    width: 120%;
+    height: 120%;
   }
   canvas {
     background-color: #666;
@@ -140,7 +139,7 @@
 </div>
 {#if !camera}
   <p class="message">
-    Please allow camera access. If you weren't asked to allow it, please try a
-    different browser.
+    Please allow camera access. If you weren't asked, please try a different
+    browser.
   </p>
 {/if}

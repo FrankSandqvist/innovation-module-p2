@@ -1,12 +1,14 @@
 <script>
   import { onMount } from "svelte";
+  import { flip } from "svelte/animate";
+
   import Post from "./Post.svelte";
   import Camera from "./Camera.svelte";
   import Spacer from "./Spacer.svelte";
   import Logo from "./Logo.svelte";
   import Footer from "./Footer.svelte";
+
   import FakeDatabase from "../utils/database";
-  import { flip } from "svelte/animate";
 
   let db = new FakeDatabase();
   let posts = db.getAllPosts();
