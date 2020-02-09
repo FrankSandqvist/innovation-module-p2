@@ -6,6 +6,7 @@ export const getCamera = new Promise((res, rej) => {
     navigator.mediaDevices
       .getUserMedia({
         video: {
+          facingMode: 'user',
           width: RESOLUTION,
           height: RESOLUTION
         }
