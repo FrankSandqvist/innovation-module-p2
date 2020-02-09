@@ -10,7 +10,6 @@
     dispatch("delete", {});
   }
 
-  export let id;
   export let photoData;
   export let liked;
 </script>
