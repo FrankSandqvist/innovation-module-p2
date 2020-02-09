@@ -5,7 +5,7 @@
   import Spacer from "./Spacer.svelte";
   import Logo from "./Logo.svelte";
   import Footer from "./Footer.svelte";
-  import FakeDatabase from "./utils/database";
+  import FakeDatabase from "../utils/database";
   import { flip } from "svelte/animate";
 
   let db = new FakeDatabase();
