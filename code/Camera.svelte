@@ -1,6 +1,8 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  const dispatch = createEventDispatcher();
+  let dispatch = createEventDispatcher();
+
+  let MAX_WIDTH = 1500;
 
   let videoElement = null,
     canvasElement = null,
@@ -15,8 +17,11 @@
       .then(function(s) {
         videoOK = true;
         videoElement.srcObject = s;
-        height = s.getVideoTracks()[0].getSettings().height;
-        width = s.getVideoTracks()[0].getSettings().width;
+        let trackWidth = s.getVideoTracks()[0].getSettings().width,
+          trackHeight = s.getVideoTracks()[0].getSettings().height;
+        let scale = trackWidth > MAX_WIDTH ? MAX_WIDTH / trackWidth : 1;
+        width = trackWidth * scale;
+        height = trackHeight * scale;
       })
       .catch(function(err) {
         console.log(err);
@@ -41,7 +46,7 @@
     ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
     ctx.drawImage(videoElement, 0, 0, width, height);
     dispatch("photo", {
-      data: canvasElement.toDataURL()
+      photoData: canvasElement.toDataURL()
     });
   }
 </script>
@@ -60,6 +65,7 @@
     transform: translate3d(0, 0, 0);
     place-self: center;
     border: 2px solid white;
+    cursor: pointer;
   }
   video {
     position: absolute;
@@ -85,8 +91,8 @@
     height: 100%;
     z-index: 100;
     font-size: 2rem;
-    background-color: rgba(0, 0, 0, 0.8);
-    animation: appear 1s;
+    background-color: rgba(255, 255, 255, 0.8);
+    animation: appear 2s;
     animation-fill-mode: forwards;
   }
   .flash {
@@ -109,10 +115,13 @@
   }
 
   @keyframes appear {
-    from {
+    0% {
       opacity: 0;
     }
-    to {
+    50% {
+      opacity: 0;
+    }
+    100% {
       opacity: 1;
     }
   }

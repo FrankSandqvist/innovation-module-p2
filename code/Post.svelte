@@ -11,7 +11,7 @@
   }
 
   export let id;
-  export let imageData;
+  export let photoData;
   export let liked;
 </script>
 
@@ -31,7 +31,6 @@
     align-items: flex-end;
     justify-content: flex-end;
     color: white;
-    font-size: 2rem;
     position: relative;
     user-select: none;
     -webkit-touch-callout: none;
@@ -42,12 +41,14 @@
     user-select: none;
   }
   .like-button {
+    font-size: 3rem;
     position: absolute;
     cursor: pointer;
     right: 2rem;
     bottom: 2rem;
   }
   .delete-button {
+    font-size: 1.5rem;
     position: absolute;
     cursor: pointer;
     left: 2rem;
@@ -57,7 +58,7 @@
 
 <div
   class="card"
-  style="background-image: url('{imageData}')"
+  style="background-image: url('{photoData}')"
   on:dblclick={handleLike}>
   <div on:click={handleDelete} class="delete-button">✕</div>
   <div on:click={handleLike} class="like-button">{liked ? '♥' : '♡'}</div>

@@ -5,4 +5,4 @@
   }
 </style>
 
-<img class="logo" alt="Instaselfie" src="logo.png" />
+<img class="logo" alt="InstaSelfie" src="logo.png" />
