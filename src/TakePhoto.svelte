@@ -50,6 +50,9 @@
   }
   video {
     position: absolute;
+    left: -2.5rem;
+    top: -2.5rem;
+    transform: translateX(2.5rem) translateY(2.5rem);
     min-width: 100%;
     max-height: 100%;
   }
