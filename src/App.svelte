@@ -43,7 +43,7 @@
   .wrapper {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     width: 100%;
     max-width: 30rem;
     margin-left: auto;
@@ -52,12 +52,18 @@
   }
   .logo {
     width: 80%;
+    place-self: center;
+  }
+  .spacer {
+    height: 2rem;
   }
 </style>
 
 <main class="wrapper">
   <img class="logo" alt="Instaselfie" src="logo.png" />
+  <div class="spacer" />
   <TakePhoto on:photo={addPost} />
+  <div class="spacer" />
   {#each posts as post (post.id)}
     <div
       in:receive={{ key: post.id }}

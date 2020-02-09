@@ -7,7 +7,7 @@
   let width = null;
   let height = null;
 
-  let countdown = null;
+  let mode = 1;
 
   if (navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices
@@ -23,8 +23,16 @@
   }
 
   function startCountdown() {
-    countdown = 3;
+    mode = 2;
+    setTimeout(function() {
+      mode = 3;
+      snap();
+      setTimeout(function() {
+        mode = 1;
+      });
+    }, 1500);
   }
+
   function snap() {
     let ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -44,10 +52,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
     position: relative;
     overflow: hidden;
-    transform: translate3d(0, 0, 0);
+	transform: translate3d(0, 0, 0);
+	place-self: center;
   }
   video {
     position: absolute;
@@ -61,10 +69,43 @@
     background-color: #666;
     display: none;
   }
+  .overlay {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    font-size: 2rem;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  .flash {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background-color: white;
+    animation: flash 0.5s;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes flash {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
 </style>
 
 <div class="shutter" on:click={startCountdown}>
-  📷
+{#if mode === 1}
+  <div class="overlay">📷</div>
+  {:else if mode === 3}
+  <div class="flash" />
+  {/if}
   <video bind:this={video} autoplay playsinline muted />
 </div>
 
