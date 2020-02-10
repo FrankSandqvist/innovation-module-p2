@@ -1,8 +1,14 @@
 <script>
+  // Javascript
+  // Your code.
   let coder = "YOUR NAME";
 </script>
 
 <style>
+  /*
+  CSS (Stylesheet)
+  Your styles
+  */
   .wrapper {
     display: flex;
     flex-direction: column;
@@ -15,4 +21,6 @@
   }
 </style>
 
+<!-- HTML -->
+<!-- Your webpage -->
 <main class="wrapper">Welcome to P2, {coder}. It's time to code!</main>

@@ -3,49 +3,54 @@
   import { createEventDispatcher } from "svelte";
   let dispatch = createEventDispatcher();
 
+  // We don't have to write "let" more than once when declaring
+  // multiple variables in a row.
   let videoElement = null,
-    canvasElement = null,
-    camera = null,
-    mode = 1;
+    camera = null, // our camera object
+    mode = 1; // 1 = ready, 2 = countdown, 3 = flash!
 
-  /*if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then(function(s) {
-        cameraOK = true;
-        videoElement.srcObject = s;
-        let trackWidth = s.getVideoTracks()[0].getSettings().width,
-          trackHeight = s.getVideoTracks()[0].getSettings().height;
-        let scale = trackWidth > MAX_WIDTH ? MAX_WIDTH / trackWidth : 1;
-        width = trackWidth * scale;
-        height = trackHeight * scale;
-      })
-      .catch(function(err) {
-        console.log(err);
-      });
-  }*/
-  getCamera.then(c => {
+  // The imported variable "getCamera" is what's called a Promise.
+  // We won't go into details for now, but a Promise allows code to
+  // be executed in the background. Promises have a function called
+  // "then", which in turn takes another function as its argument.
+  // This function is called when "getCamera" is done.
+  getCamera.then(function(c) {
     camera = c;
   });
 
+  // Svelte has a special feature, that allows you to write "$:"
+  // before a line to make it react to changes. So with this, every
+  // time "camera" changes, this if statement is executed.
   $: if (camera) {
+    // Putting the camera's video stream into the video element
     videoElement.srcObject = camera.stream;
   }
 
   function handleClick() {
+    // Only do something if we have a camera & the mode is 1 (ready).
     if (camera && mode === 1) {
+      // Set the mode to 2 (countdown)
       mode = 2;
 
+      // Call the "snapPhoto" function in 1500ms.
       setTimeout(snapPhoto, 1500);
     }
   }
 
   function snapPhoto() {
+    // Set the mode to FLASH! (3)
     mode = 3;
 
+    // Let's get the raw photo data using the "takePhoto" function.
+    // It takes the videoElement, and the camera object. Let's store
+    // the data in the "photoData" variable.
     let photoData = takePhoto(videoElement, camera);
+
+    // Now we can dispatch the data up the stream for the App
+    // component to handle the new photo.
     dispatch("photo", { photoData });
 
+    // Call the reset function in 1000ms.
     setTimeout(reset, 1000);
   }
 

@@ -1,4 +1,4 @@
-export default class FakeDatabase {
+export default class LocalDatabase {
   constructor() {
     this.posts = JSON.parse(localStorage.getItem("posts")) || [];
   }
