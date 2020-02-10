@@ -1,24 +1,36 @@
+let MAX_RESOLUTION = 500;
 let RESOLUTION = 500;
-// MAX_RESOLUTION = 500;
 
 export const getCamera = new Promise((res, rej) => {
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices
       .getUserMedia({
         video: {
-          facingMode: 'user',
+          facingMode: "user",
           width: RESOLUTION,
           height: RESOLUTION
         }
       })
       .then(function(stream) {
-        /*let trackWidth = stream.getVideoTracks()[0].getSettings().width,
-        trackHeight = stream.getVideoTracks()[0].getSettings().height;
-        let scale = trackWidth > MAX_RESOLUTION ? MAX_RESOLUTION / trackWidth : 1;*/
+        let trackWidth =
+          stream.getVideoTracks()[0].getSettings().width ||
+          stream.getVideoTracks()[0].getCapabilities().width.max;
+        let trackHeight =
+          stream.getVideoTracks()[0].getSettings().height ||
+          stream.getVideoTracks()[0].getCapabilities().height.max;
+        if (trackWidth === RESOLUTION && trackHeight === RESOLUTION) {
+          res({
+            stream,
+            width: RESOLUTION,
+            height: RESOLUTION
+          });
+        }
+        let scale =
+          trackWidth > MAX_RESOLUTION ? MAX_RESOLUTION / trackWidth : 1;
         res({
           stream,
-          width: RESOLUTION,
-          height: RESOLUTION
+          width: trackWidth * scale,
+          height: trackHeight * scale
         });
       })
       .catch(function(err) {

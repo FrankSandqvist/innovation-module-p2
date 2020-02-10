@@ -72,10 +72,10 @@
   }
   video {
     position: absolute;
-    left: -10%;
-    top: -10%;
-    width: 120%;
-    height: 120%;
+    left: -40%;
+    top: -40%;
+    width: 180%;
+    height: 180%;
   }
   canvas {
     background-color: #666;

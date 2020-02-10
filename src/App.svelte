@@ -52,13 +52,17 @@
 
 <main class="wrapper">
   <Logo />
+  <p>
+    This is what we will be making.
+    <br />
+    To get started, folders "src" -> "completed" and "exercise" -> "src".
+  </p>
   <Camera on:photo={addPost} />
   <Spacer />
   {#each posts as post (post.id)}
     <div animate:flip={{ duration: 500 }}>
       <Post
         photoData={post.photoData}
-        id={post.id}
         liked={post.liked}
         on:like={() => handleLike(post.id)}
         on:delete={() => handleDelete(post.id)} />
